@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+    <span><i class="fa-solid fa-film"></i> CinemaX</span>
+    <span class="spacer"></span>
+    <a routerLink="/" mat-button>
+        <i class="fa-solid fa-house"></i> Home
+    </a>
+
+    <a routerLink="/search" mat-button>
+        <i class="fa-solid fa-search"></i> Search
+    </a>
+ 
+    <a routerLink="/login" mat-button *ngIf="!service.getActiveKorisnik()">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+    </a>
+    <a routerLink="/user" mat-button *ngIf="service.getActiveKorisnik()">
+        <i class="fa-solid fa-user"></i> Profile
+    </a>
+    <button mat-button *ngIf="service.getActiveKorisnik()" (click)="doLogout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+</mat-toolbar>
+
+<router-outlet />

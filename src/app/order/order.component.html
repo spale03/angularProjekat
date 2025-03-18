@@ -1,0 +1,38 @@
+<div *ngIf="movie">
+    <mat-card class="order-card" appearance="outlined">
+        <img mat-card-image [src]="movie.Poster" [alt]="movie.Title">
+        <mat-card-content>
+            <h3>New reservation - {{movie.Awards}}</h3>
+            <mat-form-field class="full-width">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput [value]="movie.Title" disabled>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Genre</mat-label>
+                <input type="text" matInput [value]="movie.Genre" disabled>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Scheduled At:</mat-label>
+                <input type="text" matInput [value]="utils.formatDate(movie.Released)" disabled>
+            </mat-form-field>
+            
+            <mat-form-field class="full-width">
+                <mat-label>Choose price</mat-label>
+                <mat-select [(ngModel)]="selectedPrice">
+                    <mat-option [value]="10">10.- 15. row - 10&euro;</mat-option>
+                    <mat-option [value]="15">5.- 10. row - 15&euro;</mat-option>
+                    <mat-option [value]="20">Vip - 20&euro;</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Ticket Count</mat-label>
+                <input type="number" matInput [(ngModel)]="selectedTicketCount">
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="doOrder()">
+                <i class="fa-solid fa-cart-shopping"></i> Reserve now
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

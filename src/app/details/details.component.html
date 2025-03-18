@@ -1,0 +1,86 @@
+<div class="wrapper" *ngIf="movie">
+    <h1>{{movie.Title}}</h1>
+    <div class="movie-content">
+        <img [src]="movie.Poster" [alt]="movie.Title">
+        <mat-card class="movie-card" appearance="outlined">
+            <mat-card-content>
+                <h2>Movie Details</h2>
+                <mat-list role="list">
+                    
+                    <mat-list-item>
+                        <span matListItemTitle>Name:</span>
+                        <span matListItemLine>{{movie.Title}}</span>
+                        <span matListItemIcon>
+                            <i class="fa-solid fa-heading"></i>
+                        </span>
+                    </mat-list-item>
+                    
+                    <mat-list-item>
+                        <span matListItemTitle>Release date:</span>
+                        <span matListItemLine>{{utils.formatDate(movie.Released)}}</span>
+                         <span matListItemIcon>
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                         </span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>Movie director:</span>
+                        <span matListItemLine>{{movie.Director}}</span>
+                        <span matListItemIcon>
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>Movie writer:</span>
+                        <span matListItemLine>{{movie.Writer}}</span>
+                        <span matListItemIcon>
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>Genre:</span>
+                        <span matListItemLine>{{movie.Genre}}</span>
+                        <span matListItemIcon>
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>RunTime:</span>
+                        <span matListItemLine>{{movie.Runtime}}</span>
+                        <span matListItemIcon>
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>Actors:</span>
+                        <span matListItemLine>{{movie.Actors}}</span>
+                        <span matListItemIcon>
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>Rating:</span>
+                        <span matListItemLine>{{movie.imdbRating}}</span>
+                        <span matListItemIcon>
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>Plot:</span>
+                        <span matListItemLine>{{movie.Plot}}</span>
+                        <span matListItemIcon>
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </span>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+            <mat-card-actions>
+                <a mat-button [routerLink]="['/details/'+movie.Title+'/order']">
+                    <i class="fa-solid fa-cart-shopping"></i> Book Now
+                </a>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    
+</div>
+
+<app-loading *ngIf="!movie" />

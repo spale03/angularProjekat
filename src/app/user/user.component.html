@@ -1,0 +1,168 @@
+<div class="wrapper" *ngIf="korisnik">
+
+    <mat-card class="user-card" appearance="outlined">
+        <mat-card-header>
+            <img mat-card-avatar class="example-header-image"
+                [src]="['https://ui-avatars.com/api/?name='+korisnik.email]">
+            <mat-card-title>{{korisnik.firstName}} {{korisnik.lastName}}</mat-card-title>
+            <mat-card-subtitle>
+                <p class="no-border">Total orders: {{korisnik.rezervacije.length}}</p>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="user-card-content">
+            <mat-accordion multi>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <i class="fa-solid fa-key"></i>&nbsp;Change Password
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                        <mat-label>Old password</mat-label>
+                        <input matInput type="password" [(ngModel)]="oldPasswordValue" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>New password</mat-label>
+                        <input matInput type="password" [(ngModel)]="newPasswordValue" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Repeat password</mat-label>
+                        <input matInput type="password" [(ngModel)]="repeatPasswordValue" />
+                    </mat-form-field>
+                    <button mat-button (click)="doChangePassword()">
+                        <i class="fa-solid fa-paper-plane"></i> Sumbit
+                    </button>
+                </mat-expansion-panel>
+                <mat-expansion-panel *ngIf="korisnikCopy">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <i class="fa-solid fa-user-tag"></i>&nbsp;Update profile
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" [(ngModel)]="korisnikCopy.email" disabled />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>First Name</mat-label>
+                        <input matInput type="text" [(ngModel)]="korisnikCopy.firstName" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput type="text" [(ngModel)]="korisnikCopy.lastName" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Phone</mat-label>
+                        <input matInput type="tel" [(ngModel)]="korisnikCopy.phone" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput type="text" [(ngModel)]="korisnikCopy.address" />
+                    </mat-form-field>
+
+                    <button mat-button (click)="doUpdateUser()">
+                        <i class="fa-solid fa-paper-plane"></i> Update
+                    </button>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" *ngIf="korisnik.rezervacije.length == 0" class="no-order">
+        <mat-card-content>
+            <h1>You have no orders yet!</h1>
+            <p>To place an order visit the <a routerLink="/searh" class="cyan">search page</a></p>
+        </mat-card-content>
+    </mat-card>
+
+    <div *ngIf="korisnik.rezervacije.length > 0">
+        
+        <h1>Rezervacije</h1>
+        <table mat-table [dataSource]="korisnik.rezervacije" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="naziv_filma">
+                <th mat-header-cell *matHeaderCellDef>
+                    <i class="fa-solid fa-hashtag"></i> Naziv filma:
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.naziv_filma}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="datum_projekcije">
+                <th mat-header-cell *matHeaderCellDef>
+                    <i class="fa-solid fa-map-location-dot"></i> Datum projekcije:
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.datum_projekcije}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="broj_karata">
+                <th mat-header-cell *matHeaderCellDef>
+                    <i class="fa-solid fa-plane-circle-exclamation"></i> Broj karata:
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.broj_karata}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cena">
+                <th mat-header-cell *matHeaderCellDef>
+                    <i class="fa-solid fa-plane"></i> Cena:
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.cena}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef>
+                    <i class="fa-solid fa-arrow-up-wide-short"></i> Total:
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.cena*element.broj_karata}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status_rezervacije">
+                <th mat-header-cell *matHeaderCellDef>
+                    <i class="fa-regular fa-chart-bar"></i> Status rezervacije:
+                </th>
+                <td mat-cell *matCellDef="let element">
+
+                    <div>
+                        {{element.status_rezervacije.toUpperCase()}}
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container  matColumnDef="recenzija">
+                <th mat-header-cell *matHeaderCellDef>
+                    <i class="fa-solid fa-star"></i> Recenzija:
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <input *ngIf="element.status_rezervacije== 'gledano'" matInput (change)="doRating(element)" type="number" min="0" max="10" [(ngModel)]="element.recenzija">
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>
+                    <i class="fa-solid fa-location-arrow"></i> Actions
+                </th>
+                <td mat-cell *matCellDef="let element" class="actions">
+                    <a mat-button [routerLink]="['/details/', element.naziv_filma]">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Details
+                    </a>
+                    <div *ngIf="element.status_rezervacije == 'rezervisano'">
+                        <button type="button" mat-button (click)="doPay(element)">
+                            <i class="fa-solid fa-cart-shopping"></i> Pay
+                        </button>
+                        <button type="button" mat-button (click)="doCancel(element)">
+                            <i class="fa-solid fa-ban"></i> Cancel
+                        </button>
+                    </div>
+
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+   
+</div>
