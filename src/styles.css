@@ -29,14 +29,19 @@ body {
 .movie-card {
     background-color: #1e1e1e;
     width: 400px;
-    border-radius: 30px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 204, 0, 0.6); /* Zlatna poluprovidna ivica */
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5); /* Efekat sjaja */
+    
+    
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    
 }
 
 .movie-card:hover {
     transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.8); /* Pojačan sjaj na hover */
 }
 
 mat-card-image {

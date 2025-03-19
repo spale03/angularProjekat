@@ -28,8 +28,7 @@ export class LoginComponent {
 
   public doLogin() {
     if (KorisnikService.login(this.email, this.password)) {
-      // Redirect to user to profile
-      this.router.navigate(['/user'])
+      this.router.navigate(['/home'])
       return
     }
 
