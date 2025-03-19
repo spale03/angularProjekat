@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatSelectModule } from '@angular/material/select'
 import { MovieService } from '../../services/movie.service'
 import { MovieModel } from '../../models/movies.model'
-import { Gen } from '../../utils/weirdGenerators'
+import { Gen } from '../../utils/Generators'
 
 @Component({
   selector: 'app-search',
