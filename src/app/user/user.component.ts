@@ -44,8 +44,6 @@ export class UserComponent {
 
   constructor(private router: Router) {
     if (!KorisnikService.getActiveKorisnik()) {
-      // Korisnik aplikacije nije ulogovan
-      // Vrati korisnika na homepage
       router.navigate(['/home'])
       return
     }
